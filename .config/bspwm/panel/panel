@@ -1,0 +1,31 @@
+#! /bin/sh
+
+cd $(dirname $0)
+source /home/tomi/.config/bspwm/global_config
+
+trap 'trap - TERM; kill 0' INT TERM QUIT EXIT
+
+if [ $(pgrep -cx panel) -gt 1 ] ; then
+    printf "%s\n" "The panel is already running." >&2
+    exit 1
+fi
+
+[ -e "$PANEL_FIFO" ] && rm "$PANEL_FIFO"
+mkfifo "$PANEL_FIFO"
+
+echo "I $USER %{R} %{F${COLOR_LABEL}}$(uname -r)%{F${COLOR_BG}}" > $PANEL_FIFO &
+xtitle -sf 'T%s' > "$PANEL_FIFO" &
+conky -c panel_bar_conky > "$PANEL_FIFO" &
+bspc control --subscribe > "$PANEL_FIFO" &
+
+cat "$PANEL_FIFO" | sh ./panel_bar | lemonbar -p \
+      -g "$PANEL_GEOMETRY" \
+      -f "$FONT_BASE" \
+      -f "$FONT_POWERLINE" \
+      -f "$FONT_ICONS" \
+      -B "$COLOR_BG" \
+      -F "$COLOR_FG" \
+      -u "$PANEL_LINEHEIGHT" \
+      | while read action; do eval "$action"; done &
+
+wait

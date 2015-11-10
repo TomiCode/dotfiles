@@ -1,0 +1,21 @@
+background no
+update_interval 1
+cpu_avg_samples 2
+total_run_times 0
+override_utf8_locale no
+short_units yes
+pad_percents 1
+top_name_width 9
+uppercase no
+out_to_console yes
+out_to_x no
+mpd_host localhost
+mpd_port 6600
+
+TEXT
+S\
+%{F\#E0F0C674}%{B\#A81D1F21}%{RT3} ê%{T-} ${if_match "${mpd_status}"=="Playing"}${mpd_elapsed}/${mpd_length}${else}${mpd_status}${endif} \
+%{F\#E0B5BD68}%{B\#A81D1F21}%{R} %{T3}­%{T-} ${if_existing /proc/net/route wlp2s0}${addr wlp2s0}${else}×${endif}  \
+%{T3}%{T-} ${if_existing /proc/net/route enp3s0}${addr enp3s0}${else}×${endif} \
+%{F\#E081A2BE}%{B\#A81D1F21}%{R} %{T3}${if_match "${acpiacadapter}"=="on-line"}Â ${endif}ó%{T-} ${battery_percent BAT1}%% \
+%{F\#7A373B41}%{B-F-} ${time %A, %d %B %H:%M} 

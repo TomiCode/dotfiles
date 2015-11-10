@@ -1,0 +1,59 @@
+Xft.hinting: true
+Xft.hintstyle: hintfull 
+Xft.antialias: rgba 
+Xft.rgba: rgba
+
+xterm*selectToClipboard: true
+
+!! Config Urxvt
+urxvt*keysym.Shift-Control-V: perl:clipboard:paste
+urxvt*iso14755: false
+urxvt*perl-lib: /usr/lib/urxvt/perl/
+urxvt*perl-ext-common: default,matcher,clipboard
+urxvt*urlLauncher: /usr/bin/firefox
+urxvt*matcher.button: 1
+
+urxvt*buffered: false
+urxvt.depth: 24
+!! URxvt.background: rgb:1B1B/1B1B/1B1B
+URxvt.font: -Misc-Fixed-Medium-R-Normal--13-120-75-75-C-70-ISO10646-1
+!! URxvt.font: -xos4-terminus-medium-r-normal--12-120-72-72-c-60-iso10646-1
+URxvt.boldFont: -Misc-Fixed-Bold-R-Normal--13-120-75-75-C-70-ISO10646-1
+!! URxvt.boldFont: -xos4-terminus-bold-r-normal--12-120-72-72-c-60-iso10646-1 
+URxvt.geometry: 88x28
+URxvt.imLocale: pl_PL.UTF-8
+urxvt.scrollBar: false
+Urxvt.secondaryScroll: true
+URxvt.scrollBar_right: true
+URxvt.scrollBar_floating: true
+URxvt.scrollstyle: plain
+URxvt.scrollColor: #515150
+URxvt.saveLines: 512
+URxvt.shading: 55
+
+*background: #1D1F21
+*foreground: #C5C8C6
+! black
+*color0: #282A2E
+*color8: #373B41
+! red
+*color1: #A54242
+*color9: #CC6666
+! green
+*color2: #8C9440
+*color10: #B5BD68
+! yellow
+*color3: #DE935F
+*color11: #F0C674
+! blue
+*color4: #5F819D
+*color12: #81A2BE
+! magenta
+*color5: #85678F
+*color13: #B294BB
+! cyan
+*color6: #5E8D87
+*color14: #8ABEB7
+! white
+*color7: #707880
+*color15: #C5C8C6

@@ -1,0 +1,58 @@
+#! /bin/sh
+source /home/tomi/.config/bspwm/global_config
+
+title="%{F${COLOR_BG}R}"
+while read -r line; do
+  case $line in
+    I*)
+      user_info="${line#?}"
+      ;;
+    S*)
+      sys_info="${line#?}"
+      ;;
+    T*)
+      title=$(echo ${line#?} | sed 's^\(.\{60\}\).*^\1...^')
+      if [ -n "${title}" ]; then
+        title="%{F${COLOR_LABEL}}${title}%{F${COLOR_BG}} "
+      else
+        title="%{F${COLOR_BG}}"
+      fi
+      title="${title}%{R}"
+      ;;
+    W*)
+      IFS=":"
+      wm_info=""
+      set -- ${line#?}
+      while [ $# -gt 0 ] ; do
+        item=$1
+        name=${item#?}
+        case $item in
+          M*|m*|L*)
+            # monitor
+            shift
+            continue
+            ;;
+          O*|F*|U*)
+            # focused occupied desktop
+            P_COLOR=$COLOR_ACTIVE
+            ;;
+          o*)
+            # occupied desktop
+            P_COLOR=$COLOR_OCCUPIED
+            ;;
+          f*)
+            # free desktop
+            P_COLOR=$COLOR_EMPTY
+            ;;
+          u*)
+            # urgent desktop
+            P_COLOR=$COLOR_URGENT
+            ;;
+          esac
+        wm_info="${wm_info}%{U$P_COLOR A:bspc desktop -f ${name}:}%{+u} ${name} %{-u}%{A U-} "
+        shift
+      done
+    ;;
+  esac
+  printf "%s\n" "%{l}$user_info %{F${COLOR_TITLE}}%{R} $title%{F-B-}%{c}$wm_info %{r}$sys_info" || pkill panel
+done
